@@ -1,5 +1,6 @@
 ﻿using FirmwareFile;
 using System;
+using System.IO;
 
 namespace FirmwareFiles.Example
 {
@@ -22,7 +23,7 @@ namespace FirmwareFiles.Example
         {
             try
             {
-                var firmware = IntelFileLoader.Load( filepath );
+                var firmware = Load( filepath );
 
                 foreach( var fwBlock in firmware.Blocks )
                 {
@@ -32,6 +33,26 @@ namespace FirmwareFiles.Example
             catch( Exception e )
             {
                 Console.WriteLine( $"ERROR: {e.Message}" );
+            }
+        }
+
+        private static Firmware Load( string filepath )
+        {
+            var extension = Path.GetExtension( filepath ).ToLower();
+
+            switch( extension )
+            {
+                case ".hex":
+                    return IntelFileLoader.Load( filepath );
+
+                case ".srec":
+                case ".s19":
+                case ".s28":
+                case ".s37":
+                    return MotorolaFileLoader.Load( filepath );
+
+                default:
+                    return BinaryFileLoader.Load( filepath );
             }
         }
     }

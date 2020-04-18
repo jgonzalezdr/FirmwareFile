@@ -8,6 +8,7 @@ FirmwareFile is a .NET library written in C# to load and access firmware files e
 Supported firmware file formats:
 - Binary (.bin)
 - Intel HEX (.hex)
+- Motorola S-Record (.srec, .s19, .s28, .s37)
 
 ## Usage
 
@@ -19,6 +20,7 @@ Access the firmware memory blocks (`FirmwareBlock`) though the `Blocks` property
 
 - `BinaryFileLoader`
 - `IntelFileLoader`
+- `MotorolaFileLoader`
 
 #### Example
 
