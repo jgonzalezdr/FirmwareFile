@@ -44,11 +44,10 @@ namespace FirmwareFile
          * 
          * @param [in] filePath Path to the file containing the firmware
          */
-        public static Task<Firmware> LoadAsync( string filePath )
+        public static async Task<Firmware> LoadAsync( string filePath )
         {
-            var fileStream = new FileStream( filePath, FileMode.Open, FileAccess.Read );
-
-            return LoadAsync( fileStream );
+            using var fileStream = new FileStream( filePath, FileMode.Open, FileAccess.Read );
+            return await LoadAsync( fileStream );
         }
 
         /**
