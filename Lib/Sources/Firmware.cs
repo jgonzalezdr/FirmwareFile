@@ -7,6 +7,8 @@
 using System;
 using System.Collections.Generic;
 
+#nullable enable
+
 namespace FirmwareFile
 {
     /**
@@ -87,8 +89,10 @@ namespace FirmwareFile
                 startBlock.SetDataAtOffset( (int) ( startAddress - startBlock.StartAddress ), data );
 
                 int endBlockOffset = (int) ( endAddress - endBlock.StartAddress );
-                var tail = new ArraySegment<byte>( endBlock.Data, endBlockOffset, (int) ( endBlock.Size - endBlockOffset ) ).ToArray();
-                startBlock.AppendData( tail );
+                int tailSize = (int) ( endBlock.Size - endBlockOffset );
+                var tailData = new byte[tailSize];
+                Array.Copy( endBlock.Data, endBlockOffset, tailData, 0, tailSize );
+                startBlock.AppendData( tailData );
 
                 m_blocks.Remove( endBlock );
             }
@@ -139,9 +143,11 @@ namespace FirmwareFile
                     // Region overlaps the middle of a block => Split block
 
                     int endBlockOffset = (int) ( endAddress - blockStartAddress );
-                    var tail = new ArraySegment<byte>( block.Data, endBlockOffset, (int) ( block.Size - endBlockOffset ) ).ToArray();
+                    int tailSize = (int) ( block.Size - endBlockOffset );
+                    var tailData = new byte[tailSize];
+                    Array.Copy( block.Data, endBlockOffset, tailData, 0, tailSize );
 
-                    m_blocks.Add( new FirmwareBlock( endAddress, tail ) );
+                    m_blocks.Add( new FirmwareBlock( endAddress, tailData ) );
 
                     uint startBlockOffset = ( startAddress - blockStartAddress );
 
@@ -193,7 +199,9 @@ namespace FirmwareFile
 
                 if( ( blockStartAddress <= startAddress ) && ( blockEndAddress >= endAddress ) )
                 {
-                    return new ArraySegment<byte>( block.Data, (int) ( startAddress - blockStartAddress ), (int) size ).ToArray();
+                    var returnData = new byte[size];
+                    Array.Copy( block.Data, (int) ( startAddress - blockStartAddress ), returnData, 0, size );
+                    return returnData;
                 }
             }
 
