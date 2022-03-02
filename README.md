@@ -2,6 +2,8 @@ FirmwareFile
 ============
 
 ## About
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fjgonzalezdr%2FFirmwareFile.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fjgonzalezdr%2FFirmwareFile?ref=badge_shield)
+
 
 FirmwareFile is a .NET library written in C# to load and access firmware files easily.
 
@@ -48,3 +50,6 @@ public class Example
   }
 }
 ```
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fjgonzalezdr%2FFirmwareFile.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fjgonzalezdr%2FFirmwareFile?ref=badge_large)
